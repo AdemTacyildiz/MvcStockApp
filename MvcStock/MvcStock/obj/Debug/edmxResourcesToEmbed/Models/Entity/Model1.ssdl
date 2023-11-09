@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TblCategories">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TblCustomers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+    <Property Name="CustomerSurName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TblProducts">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProductCategory" Type="smallint" />
+    <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ProductBrand" Type="varchar" MaxLength="50" />
+    <Property Name="ProductStock" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="TblSales">
+    <Key>
+      <PropertyRef Name="SalesID" />
+    </Key>
+    <Property Name="SalesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalesProduct" Type="int" />
+    <Property Name="SalesCustomer" Type="int" />
+    <Property Name="SalesPiece" Type="tinyint" />
+    <Property Name="SalesPrice" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_TblProducts_TblCategories">
+    <End Role="TblCategories" Type="Self.TblCategories" Multiplicity="0..1" />
+    <End Role="TblProducts" Type="Self.TblProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblCategories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="TblProducts">
+        <PropertyRef Name="ProductCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblSales_TblCustomers">
+    <End Role="TblCustomers" Type="Self.TblCustomers" Multiplicity="0..1" />
+    <End Role="TblSales" Type="Self.TblSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblCustomers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="TblSales">
+        <PropertyRef Name="SalesCustomer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblSales_TblProducts">
+    <End Role="TblProducts" Type="Self.TblProducts" Multiplicity="0..1" />
+    <End Role="TblSales" Type="Self.TblSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblProducts">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="TblSales">
+        <PropertyRef Name="SalesProduct" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StockDbModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblCategories" EntityType="Self.TblCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblCustomers" EntityType="Self.TblCustomers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblProducts" EntityType="Self.TblProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblSales" EntityType="Self.TblSales" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TblProducts_TblCategories" Association="Self.FK_TblProducts_TblCategories">
+      <End Role="TblCategories" EntitySet="TblCategories" />
+      <End Role="TblProducts" EntitySet="TblProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblSales_TblCustomers" Association="Self.FK_TblSales_TblCustomers">
+      <End Role="TblCustomers" EntitySet="TblCustomers" />
+      <End Role="TblSales" EntitySet="TblSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblSales_TblProducts" Association="Self.FK_TblSales_TblProducts">
+      <End Role="TblProducts" EntitySet="TblProducts" />
+      <End Role="TblSales" EntitySet="TblSales" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

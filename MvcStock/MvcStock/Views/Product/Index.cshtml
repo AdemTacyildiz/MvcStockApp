@@ -1,0 +1,56 @@
+﻿@using MvcStock.Models.Entity
+@using PagedList
+@using PagedList.Mvc
+
+@model  PagedList.IPagedList<TblProducts>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<h2>Products</h2>
+
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Product Brand </th>
+            <th>Product Category</th>
+            <th>Product Price</th>
+            <th>Product Stock</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var products in Model)
+        {
+            <tr>
+                <th>@products.ProductID</th>
+                <td>@products.ProductName</td>
+                <td>@products.ProductBrand</td>
+                <td>@products.TblCategories.CategoryName</td>
+                <td>@products.ProductPrice</td>
+                <td>@products.ProductStock</td>
+                <td><a href="/Product/DeleteProduct/@products.ProductID" class="btn btn-danger">Delete</a></td>
+                <td><a href="/Product/BringProduct/@products.ProductID" class="btn btn-success">Update</a></td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+<script>
+    $('#tbl1').DataTable();
+</script>

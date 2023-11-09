@@ -1,0 +1,35 @@
+﻿@model MvcStock.Models.Entity.TblProducts
+@{
+    ViewBag.Title = "BringProduct";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>BringProduct</h2>
+
+@using (Html.BeginForm("UpdateProduct","Product",FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ProductID)
+                    @Html.TextBoxFor(m => m.ProductID, new { @class = "form-control" })
+                    <br />
+                    @Html.LabelFor(m => m.ProductName)
+                    @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                    <br />
+                    @Html.LabelFor(m => m.ProductBrand)
+                    @Html.TextBoxFor(m => m.ProductBrand, new { @class = "form-control" })
+                    <br />
+                    @Html.LabelFor(m => m.ProductCategory)
+                    @Html.DropDownListFor(m=>m.TblCategories.CategoryID,(List<SelectListItem>)ViewBag.vls,new {@class ="form-control"})
+                    @*@Html.TextBoxFor(m => m.ProductCategory, new { @class = "form-control" })*@
+                    <br />
+                    @Html.LabelFor(m => m.ProductPrice)
+                    @Html.TextBoxFor(m => m.ProductPrice, new { @class = "form-control" })
+                    <br />
+                    @Html.LabelFor(m => m.ProductStock)
+                    @Html.TextBoxFor(m => m.ProductStock, new { @class = "form-control" })
+                    <br />
+                </div>
+                <div>
+                    <button class="btn btn-warning">Update</button>
+                </div>
+            }
